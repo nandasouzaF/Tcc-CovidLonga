@@ -1,0 +1,56 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+
+
+<header style="padding: 30px;">
+
+    <div class="d-flex justify-content-between">
+        <div>
+            <button type="button" class="btn btn-dark btn-sm mr-2" onclick="window.location.href='/info'">Covid Longa </button>
+        </div>
+        <div>
+            <button type="button" class="btn btn-dark btn-sm mr-2" onclick="window.location.href='/info'">Informações</button>
+            <button type="button" class="btn btn-dark btn-sm mr-2" onclick="window.location.href='/test'">Teste</button>
+            
+            {% if not current_user.is_authenticated %}
+            <button type="button" class="btn btn-dark btn-sm mr-2" onclick="window.location.href='/login'">Login</button>
+          {% endif %}            
+          {% if not current_user.is_authenticated %}
+          <button type="button" class="btn btn-dark btn-sm mr-2" onclick="window.location.href='/escrever'">Escrever</button>
+            {% endif %}            
+            
+            <div class="btn-group">
+                {% if current_user.is_authenticated %}
+                    <button type="button" class="btn btn-outline-dark btn-sm btn-profile" onclick="window.location.href='/perfil'">
+                        <i class="fas fa-user"></i> <!-- Ícone de usuário -->
+                    </button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+</header>
+
+<style>
+.btn:hover {
+    background-color:#8348B9 ; /* Altere a cor aqui para a cor desejada */
+}
+
+.btn-profile {
+    display: flex;
+    align-items: center;
+}
+
+.btn-profile img {
+    width: 20px; /* Ajuste o tamanho da imagem conforme necessário */
+    height:60px;
+    border-radius: 50%;
+    margin-right: 5px; /* Adicione espaçamento entre a imagem e o texto */
+}
+
+.btn-profile:hover {
+    background-color: #8348B9; /* Altere para a cor desejada */
+    /* Outros estilos adicionais quando o mouse passar por cima */
+}
+</style>

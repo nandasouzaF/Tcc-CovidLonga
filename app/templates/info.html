@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <!-- O resto do seu cabeçalho permanece igual -->
+
+  <style>
+    /* Estilos para o menu lateral */
+    .menu {
+      width: 250px;
+      background-color: rgba(131, 72, 185, 0.5);
+      float: left;
+      overflow-y: auto;
+      max-height: 100vh; /* Altura máxima do menu até a altura da janela */
+      margin-top:20px;
+      border-radius: 10px;
+
+    }
+
+    .menu-item {
+      padding: 10px 20px;
+      cursor: pointer;
+      border-bottom: 1px solid #ccc;
+      transition: background-color 0.3s;
+    }
+
+    .menu-item:hover {
+      background-color: #e0e0e0;
+    }
+
+    .content {
+      margin-left: 270px; /* Largura do menu + margem */
+      padding: 20px;
+      margin-top: 25px;
+    }
+
+    /* Estilos para a seção de informações */
+    .info-section {
+      display: none;
+      margin-bottom: 20px;
+    }
+
+    .info-section.active {
+      display: block;
+    }
+
+
+
+
+
+      /* Estilo para o aviso */
+      .warning {
+        background-color: #fef7e5; /* Cor de fundo do aviso */
+        border-left: 6px solid #f7d351; /* Cor da borda do aviso */
+        padding: 10px; /* Espaçamento interno */
+        margin-bottom: 20px; /* Margem inferior para separar do conteúdo */
+      }
+    
+      /* Estilo para o texto do aviso */
+      .warning p {
+        margin: 0; /* Remover margem padrão */
+      }
+  </style>
+</head>
+
+<body>
+    {% include 'header.html' %}
+  <div class="wrapper">
+    <div class="menu">
+      <div class="menu-item" onclick="showInfo('info1')">O que é Covid Longa?</div>
+      <div class="menu-item" onclick="showInfo('info2')">Condições Longas de COVID ou Pós-COVID</div>
+      <div class="menu-item" onclick="showInfo('info3')">Cuidando de Pessoas com COVID Longa</div>
+      <div class="menu-item" onclick="showInfo('info4')">A Organização Mundial da Saúde já considera a long Covid uma doença.</div>
+      <div class="menu-item" onclick="showInfo('info5')">Long-covid: como se diagnostica, quais os maiores riscos e como fazer tratamento</div>
+      <div class="menu-item" onclick="showInfo('info6')">Efeitos a longo prazo da COVID-19 (COVID a longo prazo)</div>
+      <div class="menu-item" onclick="showInfo('info7')">Como Funciona o Site Covid Longa Teste</div>
+
+    
+    </div>
+
+    <div class="content">
+        <div class="info-section" id="info1" class="active">
+        <h1>Informações sobre Covid Longa</h1>
+
+        <br>
+        <br>
+    </header>
+
+    <!-- Seções com informações -->
+    <section>
+      <h3>O que é Covid Longa?</h3>
+
+      <br>
+      <p>A Covid Longa é uma condição em que pessoas continuam a experimentar sintomas persistentes após a infecção pelo SARS-CoV-2, o vírus da Covid-19. Os sintomas podem incluir fadiga, dificuldade respiratória, dores musculares, entre outros.</p>
+    </section>
+
+    <section>
+      <h2>Sintomas Comuns</h2>
+      <ul>
+        <li>Fadiga persistente</li>
+          <li>Tosse contínua</li>
+          <li>Dificuldade respiratória</li>
+          <li>Dores musculares</li>
+          <li>Dor de cabeça</li>
+          <li>Perda de olfato ou paladar</li>
+          <li>Dificuldade de concentração ("névoa cerebral")</li>
+          <li>Entre outros sintomas...</li>
+        <!-- Adicione mais sintomas conforme necessário -->
+      </ul>
+    </section>
+
+    <section>
+      <h3>Tratamento e Cuidados</h3>
+      <br>
+      <p>O tratamento para Covid Longa geralmente envolve abordagens multidisciplinares, incluindo suporte sintomático, terapia física e acompanhamento médico regular.</p>
+      <p>É importante consultar um profissional de saúde para obter orientação adequada sobre o tratamento e cuidados específicos.</p>
+    </section>
+
+    <section>
+      <h3>Fontes Confiáveis</h3>
+      <p>Para informações mais detalhadas e atualizadas sobre Covid Longa, consulte:</p>
+      
+      <ul>
+        <li><a href="https://www.who.int/pt/emergencies/disease-outbreak-news/item/2021-DON323">Organização Mundial da Saúde (OMS)</a></li>
+        <li><a href="https://saude.gov.br/">Ministério da Saúde</a></li>
+         <a href="https://butantan.gov.br/noticias/sindrome-da-covid-longa-pode-afetar-metade-dos-pacientes-infectados-por-sars-cov-2">Instituto Butantan</a>
+
+        <!-- Adicione mais fontes confiáveis conforme necessário -->
+      </ul>
+    </section>
+
+      </div>
+
+      <div class="info-section" id="info2">
+        
+        <h2>Condições Longas de COVID ou Pós-COVID</h2>
+        <br>
+        <p>COVID longo
+            Algumas pessoas que foram infectadas com o vírus que causa a COVID-19 podem experimentar 
+            efeitos a longo prazo de sua infecção, conhecidos como COVID Longa ou Condições Pós-COVID (PCC).
+            A COVID longa é amplamente definida como sinais, sintomas e condições que continuam ou se desenvolvem após
+            a infecção aguda pela COVID-19. Esta definiçãode Long COVID foi desenvolvido pelo Departamento de Saúde e Serviços Humanos 
+            (HHS) em colaboração com o CDC e outros parceiros.</p>
+            
+            <p>As pessoas chamam Long COVID por muitos nomes, incluindo Condições Pós-COVID, COVID de longa 
+            distância, COVID pós-aguda-19, efeitos de longo prazo da COVID e COVID crônica. O termo sequelas 
+            pós-agudas da infecção por SARS CoV-2 (PASC) também é usado para se referir a um subconjunto de Long COVID.</p>
+      
+            <h3>O Que Você Precisa Saber</h3>
+            <p>
+                <ul>
+                  <li><span></span> A COVID longa pode incluir uma ampla gama de problemas de saúde contínuos; essas condições podem durar semanas, meses ou anos.</li>
+                  <li><span></span> A COVID longa ocorre com mais frequência em pessoas que tiveram doença grave por COVID-19, mas qualquer pessoa que tenha sido infectada com o vírus que causa a COVID-19 pode experimentá-la.</li>
+                  <li><span></span> As pessoas que não são vacinadas contra a COVID-19 e são infectadas podem ter um risco maior de desenvolver COVID Longa em comparação com as pessoas que foram vacinadas.</li>
+                  <li><span></span> As pessoas podem ser reinfectadas com SARS-CoV-2, o vírus que causa a COVID-19, várias vezes. Cada vez que uma pessoa é infectada ou reinfectada com SARS-CoV-2, ela corre o risco de desenvolver Long COVID.</li>
+                  <li><span></span> Embora a maioria das pessoas com Long COVID tenha evidências de infecção ou doença COVID-19, em alguns casos, uma pessoa com Long COVID pode não ter testado positivo para o vírus ou saber que estava infectada.</li>
+                  <li><span></span> O CDC e seus parceiros estão trabalhando para entender mais sobre quem sofre Long COVID e por quê, incluindo se grupos desproporcionalmente impactados pela COVID-19 estão em maior risco.</li>
+                </ul>
+              </p>
+              
+      
+              <p>Para mais informações, visite o <a href="https://www.cdc.gov">Site do CDC</a>.</p>
+        </div>
+
+
+
+
+
+
+
+      <div class="info-section" id="info3">
+        <h2>Cuidando de Pessoas com COVID Longa</h2>
+        <br>
+        <div class="warning">
+            <p><strong>Nota de Aviso:</strong> Esta informação destina-se a um público geral. Os profissionais de saúde devem consultar a página Informações para Profissionais de Saúde para obter informações mais detalhadas sobre gerenciamento.</p>
+          </div>
+          <br>
+        <p>Observe que Long COVID é referido por uma ampla gama de nomes, incluindo:</p>
+        <p>
+            <ul>
+            <li><span></span> Condições pós-COVID</li>
+            <li><span></span> COVID-19 pós-aguda</li>
+            <li><span></span> Efeitos a longo prazo da COVID</li>
+            <li><span></span> Síndrome pós-aguda da COVID</li>
+
+            <li><span></span> COVID Crônica</li>
+            <li><span></span> COVID de longo curso</li>
+            <li><span></span> Sequedas tardias</li>
+            </ul>
+
+
+           <h3> Para fins desta discussão, usamos “Long COVID”.</h3>
+
+            Ter Long COVID ou apoiar alguém com Long COVID pode ser um desafio. Pode ser difícil cuidar de um ente querido com COVID Longa, especialmente quando ainda há poucas ou nenhuma resposta ou solução imediata disponível. No entanto, existem maneiras de
+            ajudar a aliviar parte do fardo de cuidar de alguém com uma condição nova e desconhecida.
+
+
+            Cuidando de Adultos com COVID Longa
+            Experimentar COVID longo pode ser confuso e frustrante. Se você conhece ou cuida de alguém com COVID Longa, você sabe que ele pode estar se sentindo isolado, deprimido e até com raiva.
+
+            As pessoas experimentam a Long COVID de maneiras diferentes e podem querer diferentes tipos de apoio ou mesmo nenhum apoio. Para determinar as medidas mais úteis que você pode tomar para ajudar alguém com Long COVID,
+            primeiro ouça com compaixão e faça perguntas sobre o que eles precisam.
+        </p>
+
+        <p>Para mais informações, visite o <a href="https://www.cdc.gov">Site do CDC</a>.</p>
+
+
+      </div>
+  
+
+
+
+
+
+
+
+    <div class="info-section" id="info4">
+
+        <section>
+        <h2>A Organização Mundial da Saúde já considera a long Covid uma doença. Saiba do que se trata e quais as suas principais caraterísticas. </h2>
+        <br>
+        <p>A Organização Mundial da Saúde já assumiu a long Covid como uma doença em si mesma, que se carateriza pelas sequelas sentidas a longo prazo, na sequência de uma infeção pelo novo coronavírus. 1
+
+            São muitos os sintomas que podem ser associados à long Covid e, também, diversas as formas de tratamento ou alívio destas manifestações. Aprenda a identificar a long Covid e qual o seu tratamento.</p>
+            
+            
+            
+            <h3>Tratamento</h3>
+        <p>Experienciar os resultados de um long Covid pode ser difícil, particularmente quando ainda não existem respostas ou soluções. Por outro lado, existem opções para as pessoas que sofrem com o long Covid. Estas poderão procurar aconselhamento médico, que as poderá ajudar a gerir os seus sintomas e melhorar a sua qualidade de vida.
+
+            Para haver uma recuperação eficaz da long Covid, é importante que o diagnóstico desta condição seja precoce, de modo a iniciar a reabilitação mais rapidamente e evitar complicações que possam comprometer o bem-estar e mesmo a vida do doente.
+            
+            O tratamento da long Covid deve passar por um programa de reabilitação personalizado, se necessário, tendo em conta as caraterísticas e as necessidades do doente.</p>
+            
+            <p>Assim, e de acordo com as recomendações da própria Organização Mundial da Saúde, esta reabilitação deve ter como fim a preparação dos doentes para retomarem as suas rotinas diárias a um ritmo adequado às suas capacidades momentâneas. Isto deve ser proporcional aos seus níveis de energia e, sobretudo, não agravando o quadro sintomático apresentado.
+            
+            Para isso, é importante contar com uma equipa multidisciplinar, composta por exemplo, por fisioterapeutas especializados em fisioterapia respiratória. 3
+            
+            Esta reabilitação pode ser feita nos cuidados de saúde primários nos cuidados hospitalares ou numa combinação entre ambos. </p>
+            
+
+        </section>
+
+        <section>
+            <h3>Conclusão</h3>
+            <p>
+
+                Se suspeita que pode estar com um quadro de long Covid, deve consultar o quanto antes o seu médico, visto que o diagnóstico atempado desta condição pode fazer toda a diferença no seu prognóstico de recuperação.
+                
+                Assim, se já teve Covid há alguns meses, mas há sintomas que persistem ou que parecem ter retornado, então vale a pena falar com um profissional de saúde e despistar esta doença.</p>
+        
+                <p>Para mais informações, visite o <a href="https://www.unilabs.pt/pt">Site do unilabs</a>.</p>
+            </section>
+            </div>
+
+
+
+
+
+        <div class="info-section" id="info5">
+            <h2>Long-covid: como se diagnostica, quais os maiores riscos e como fazer tratamento </h2>
+
+
+            <p><strong>Uma em cada cinco pessoas que têm covid-19 fica com sequelas para lá dos três meses. Apesar de ainda se saber pouco sobre este problema de saúde, os médicos adiantam que os 
+                vacinados parecem ser menos afetados e que a reabilitação é decisiva na recuperação</strong></p>
+            <p>Febre, dores no corpo, cansaço ou diarreia. São alguns dos sintomas que a covid-19 pode causar e que em muitos doentes se prolongam para além da infeção.
+                Se em alguns casos duram quatro, seis ou mais semanas, noutros ultrapassam os três meses - e esse dado de tempo dever ser um sinal de alerta, garantem os médicos. 
+                Ter sintomas 90 dias após de ter sido infetado com Sars-Cov2 é um indicador de que pode estar em causa o que é conhecido como long-covid, uma síndrome decorrente da doença, 
+                e que um novo estudo do Centro para o Controlo e Prevenção de Doenças dos Estados Unidos acredita que afeta pelo menos 20% das pessoas.</p>
+
+                <p>Apesar de esta complicação já ter sido identificada há vários meses, existe ainda muita informação desconhecida sobre a long-covid. O médico Miguel Toscano Rico explica à 
+                CNN Portugal que o diagnóstico terá de ser feito sempre de uma forma muito dirigida, dependendo de doente para doente..</p>
+
+
+                <p>“É um diagnóstico de exclusão. Temos quase de ir de sintoma em sintoma”, refere o médico responsável pela clínica pós-covid do Hospital Curry Cabral, explicando que, 
+                muitas vezes, essa exclusão também vai diferenciar doentes que efetivamente têm sintomas de long-covid dos que apenas têm sintomas de patologias isoladas..</p>
+                
+
+                <p> Nesta altura o diagnóstico passa por perceber quais os sintomas de que o doente se queixa, dirigindo-se para cada um deles. O pneumologista Luís Rocha explica, por seu lado, que, na sua área, fazem-se exames relacionados com os diferentes 
+                sintomas. "Se forem questões respiratórias vou fazer exames aos pulmões, à função respiratória. Se forem questões cardíacas vou fazer exames para saber como o coração está a funcionar", refere o especialista, que também acompanha doentes com long-covid de forma regular..</p>
+
+                <p>No fundo, é possível haver doentes com sintomas que depois se revelam serem de insuficiência cardíaca ou depressão, por exemplo, e que não estão relacionados com a long-covid: “Se tivermos despistado as doenças todas que possam justificar aquela sintomatologia atribuímos a doença a pós-covid”, acrescenta Miguel Toscano Rico, admitindo a dificuldade desta tarefa..</p>
+
+                <p>“Não há um marcador para a doença. Isso não existe. Não há análises que nos digam se o doente tem long-covid ou não, e isto complica o diagnóstico”, admite o médico..</p>
+                            
+                        </p>
+
+                <p>Para mais informações, visite o <a href="https://cnnportugal.iol.pt">Site do unilabs</a>.</p>
+                </div>
+
+
+    <div class="info-section" id="info6">
+
+    <h2>Efeitos a longo prazo da COVID-19 (COVID a longo prazo)</h2>
+    <p>O que é COVID longo?</p>
+    <p>A maioria das pessoas com COVID-19 se sente melhor dentro de alguns dias ou semanas após seus primeiros sintomas e faz uma recuperação completa dentro de 12 semanas. Para algumas pessoas, os sintomas podem durar mais tempo.</p>
+    <p>Isso é chamado de COVID longa ou síndrome pós-COVID-19. A COVID longa é uma nova condição que ainda está sendo estudada.</p>
+    
+    <p>Informações:</p>
+    <p>Você pode encontrar mais informações para apoiar sua recuperação no site Your COVID Recovery.</p>
+    
+    <h3>Sintomas de COVID longa</h3>
+    
+    <p>Os sintomas mais comuns da COVID longa são:</p>
+    <ul>
+      <li>cansaço extremo (fadiga)</li>
+      <li>sentindo falta de ar</li>
+      <li>perda de olfato</li>
+      <li>dores musculares</li>
+    </ul>
+    <p>No entanto, há muitos sintomas que você pode ter após uma infecção por COVID-19, incluindo:</p>
+    <ul>
+      <li>problemas com sua memória e concentração ("neblina cerebral")</li>
+      <li>dor no peito ou aperto</li>
+      <li>dificuldade para dormir (insônia)</li>
+      <li>palpitações cardíacas</li>
+      <li>tontura</li>
+      <li>alfinetes e agulhas</li>
+      <li>dor nas articulações</li>
+      <!-- ... Outros sintomas ... -->
+    </ul>
+    
+    <p>Conselhos não urgentes: Entre em contato com um médico de família se:</p>
+    <p>você teve sintomas de COVID-19 por 4 semanas ou mais e está preocupado</p>
+    
+    <h3>Obtendo uma indicação para um longo serviço de COVID</h3>
+    
+    <p>O GP perguntará sobre seus sintomas e o impacto que eles estão tendo em sua vida.</p>
+    <p>Eles podem sugerir alguns testes para descobrir mais sobre seus sintomas e descartar outras coisas que possam estar causando-os.</p>
+    <p>Estes podem incluir:</p>
+    <ul>
+      <li>exames de sangue</li>
+      <li>verificando sua pressão arterial e frequência cardíaca</li>
+      <li>uma radiografia de tórax</li>
+      <li>medindo seus níveis de oxigênio</li>
+    </ul>
+    <p>O GP falará com você sobre os cuidados e o apoio que você pode precisar.</p>
+    <!-- ... Outras seções ... -->
+    
+    <p>Quanto tempo leva para se recuperar?</p>
+    <p>Quanto tempo leva para se recuperar da COVID-19 é diferente para todos.</p>
+    
+    <h3>Recuperando-se da longa COVID</h3>
+    
+    <p>A recuperação da longa COVID varia. Alguns sintomas podem melhorar rapidamente e outros duram mais.</p>
+    <p>As chances de ter sintomas a longo prazo não parecem estar ligadas ao quão doente você está quando contrai COVID-19 pela primeira vez.</p>
+    <p>Pessoas que tiveram sintomas leves no início ainda podem ter problemas a longo prazo.</p>
+  
+    <p>
+
+        <p>Para mais informações, visite o <a href="https://www.nhs.uk">Site do nhs</a>.</p>
+    </div>
+        
+
+
+
+
+
+
+    <div class="info-section" id="info7">
+        <h2>Como Funciona o Site Covid Longa Teste</h2>
+        <br>
+        <p>O objetivo deste site é fornecer informações relevantes sobre a Covid Longa. Ao fazer o login, os usuários têm a opção de preencher um formulário detalhado. Este formulário destaca informações relevantes que podem ser úteis na avaliação da probabilidade de um paciente estar com Covid Longa.</p>
+      
+        <h3>Cálculo de Probabilidade</h3>
+        <br>
+        
+        <p>Após o preenchimento do formulário, o sistema realiza um cálculo de probabilidade com base em critérios específicos:</p>
+        <ul>
+          <li>A análise utiliza dados detalhados de pacientes que tiveram Covid Longa nos anos de 2021, 2022 e 2023. Esses dados foram obtidos do Data SUS e incluem informações sobre sintomas, duração e progressão da doença.</li>
+          <li>São considerados os sintomas persistentes que se estendem além da terceira semana após a infecção, de acordo com as diretrizes da Organização Mundial da Saúde (OMS).</li>
+          <li>O cálculo também leva em conta a gravidade dos sintomas e seu impacto na qualidade de vida do paciente.</li>
+        </ul>
+      
+        <h3>Coleta de Dados e Análise</h3>
+        <br>
+        <p>Os dados utilizados para o cálculo são provenientes de uma análise detalhada de pacientes reais que experimentaram sintomas de Covid Longa. Esses dados são continuamente atualizados e refinados conforme novas informações se tornam disponíveis.</p>
+        <p>A coleta e análise são realizadas de acordo com os padrões éticos e de privacidade dos pacientes, garantindo anonimato e confidencialidade.</p>
+      
+        
+        <div class="warning">
+            <p><strong>Considerações Importantes:</strong> O teste de probabilidade fornecido pelo site é apenas uma estimativa baseada em dados analíticos. Ele não substitui a avaliação e o diagnóstico médico. Os usuários são fortemente aconselhados a procurar um profissional de saúde para confirmar o diagnóstico e receber orientações adequadas.</p>
+          </div>
+    
+    
+    </div>
+    </div>
+
+
+  <script>
+    function showInfo(id) {
+      const sections = document.querySelectorAll('.info-section');
+      sections.forEach(section => {
+        section.classList.remove('active');
+      });
+
+      const selectedSection = document.getElementById(id);
+      selectedSection.classList.add('active');
+    }
+
+
+
+    function showInfo(id) {
+        const sections = document.querySelectorAll('.info-section');
+        sections.forEach(section => {
+          section.classList.remove('active');
+        });
+    
+        const selectedSection = document.getElementById(id);
+        selectedSection.classList.add('active');
+      }
+    
+      // Verifique se a URL corresponde à página /info
+      if (window.location.pathname === '/info') {
+        // Execute a função showInfo para exibir a seção desejada
+        showInfo('info1'); // Aqui, 'info1' é o ID da seção desejada
+      }
+  </script>
+  {% include 'footer.html' %}
+</body>
+
+</html>

@@ -1,0 +1,194 @@
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_debugtoolbar import DebugToolbarExtension
+from flask_login import UserMixin, LoginManager
+from sqlalchemy import text
+from flask_bcrypt import Bcrypt
+from flask_bcrypt import check_password_hash
+from datetime import datetime
+from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+
+app = Flask(__name__)
+
+db = SQLAlchemy()
+
+bcrypt = Bcrypt(app)
+# banco de dado
+
+app.config['SECRET_KEY'] = 'your_secret_key'
+#toolbar = DebugToolbarExtension(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:1234....Rr@localhost/mydb_covidLonga'
+db = SQLAlchemy(app)
+# Configuração do Flask Debug Toolbar
+app.config['DEBUG_TB_ENABLED'] = True
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+toolbar = DebugToolbarExtension(app)
+
+
+#Configuração do Flask-Login
+login_manager = LoginManager()
+login_manager.init_app(app)
+# Configurar a rota de login. Esta será a rota para onde o usuário é redirecionado ao fazer logout.
+login_manager.login_view = "login"  # Substitua "login" pela rota de login do seu aplicativo.
+login_manager = LoginManager(app)
+
+
+# TESTANDO O BANCO DE DADO
+try:
+    with app.app_context():
+        result = db.session.execute(text('SELECT 1')).fetchone()
+        if result[0] == 1:
+            print("Conexão com o banco de dados bem-sucedida.")
+        else:
+            print("Falha na conexão com o banco de dados.")
+except Exception as e:
+    print("Erro durante a conexão com o banco de dados:", str(e))
+
+
+
+# Certifique-se de que este código seja executado dentro da função de criação da aplicação
+with app.app_context():
+    db.create_all()
+
+
+
+
+#Definição do modelo User
+class User(db.Model, UserMixin):
+    __tablename__ = 'user'
+
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(60), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(60), nullable=False)
+    confirm_password = db.Column(db.String(60), nullable=False)
+    birth_date = db.Column(db.String(60), nullable=False)
+    gender = db.Column(db.String(60), nullable=False)
+    city = db.Column(db.String(60), nullable=False)
+    state = db.Column(db.String(60), nullable=False)
+    race = db.Column(db.String(60), nullable=False)
+
+    pacientes = db.relationship('Paciente', backref='user_pacientes', lazy=True)
+    
+    
+    
+    
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
+    
+    def set_password(self, new_password):
+        self.password =  bcrypt.generate_password_hash(new_password)
+
+    def is_active(self):
+        return True
+    
+
+    def __repr__(self):
+        return f"<User {self.username}>"
+    
+    def save(self):
+            db.session.add(self)
+            db.session.commit()
+
+
+#TABELA NO BANCO PACIENTE-------------------------------------------
+class Paciente(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(255))
+    idade = db.Column(db.Integer)
+    sexo = db.Column(db.String(10))
+    gestante = db.Column(db.String(3))
+    raca = db.Column(db.String(10))
+    data_sintomas = db.Column(db.Date)
+    escolaridade = db.Column(db.String(20))
+    estado = db.Column(db.String(2))
+    cidade = db.Column(db.String(255))
+    zona = db.Column(db.String(10))
+    diarreia = db.Column(db.Boolean)
+    perda_olfato = db.Column(db.Boolean)
+    perda_paladar = db.Column(db.Boolean)
+    fadiga = db.Column(db.Boolean)
+    tosse = db.Column(db.Boolean)
+    outro_sintoma = db.Column(db.Boolean)
+    nosocomial = db.Column(db.Boolean)
+    dispneia = db.Column(db.Boolean)
+    pneumopati = db.Column(db.Boolean)
+    cardiopati = db.Column(db.Boolean)
+    sind_down = db.Column(db.Boolean)
+    asma = db.Column(db.Boolean)
+    diabetes = db.Column(db.Boolean)
+    neurologic = db.Column(db.Boolean)
+    renal = db.Column(db.Boolean)
+    obesidade = db.Column(db.Boolean)
+    dose_1 = db.Column(db.Boolean)
+    dose_2 = db.Column(db.Boolean)
+    dose_3 = db.Column(db.Boolean)
+    dose_4 = db.Column(db.Boolean)
+    hospitalization = db.Column(db.Boolean, default=False)
+    internacao_hospitalar = db.Column(db.Boolean)
+    internacao_uti = db.Column(db.Boolean)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship('User', backref='paciente_user')
+
+
+class Teste(db.Model):
+    __tablename__ = 'teste'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    paciente_id = db.Column(db.Integer, db.ForeignKey('paciente.id'), nullable=False)
+    nome = db.Column(db.String(255))
+    probabilidade = db.Column(db.Float)
+    data_do_teste = db.Column(db.DateTime, default=datetime.utcnow)  # Adicione o campo data_do_teste com o valor padrão de data e hora atuais
+
+    # Defina o relacionamento com a classe Paciente
+    paciente = db.relationship('Paciente', backref='testes')
+
+    def __init__(self, user_id, paciente_id, nome, probabilidade, data_do_teste):  # Adicione o argumento data_do_teste
+        self.user_id = user_id
+        self.paciente_id = paciente_id
+        self.nome = nome
+        self.probabilidade = probabilidade
+        self.data_do_teste = data_do_teste  # Inclua o atributo data_do_teste
+
+
+
+
+
+# Defina um modelo para a tabela de resultados
+class ResultadoTeste(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    probabilidade = db.Column(db.Float)
+    mensagem = db.Column(db.String(255))
+    data_teste = db.Column(db.DateTime, default=db.func.current_timestamp())
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))  # Chave estrangeira
+
+    # Adicione um relacionamento para associar ResultadoTeste a User
+    user = db.relationship('User', backref=db.backref('resultados_teste', lazy=True))
+# PERFIL:Banco de dados
+class UserProfile(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    username = db.Column(db.String(100))
+    age = db.Column(db.Integer)
+    # Adicione outros campos do formulário e resultados aqui
+    
+
+    def __init__(self, user_id, username, age,):
+        self.user_id = user_id
+        self.username = username
+        self.age = age
+
+
+
+
+
+if __name__ == '__main__':
+    app.run()
+
+
+
+
+    

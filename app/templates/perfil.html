@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Página de Perfil</title>
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+<style>
+.profile-information {
+color: #333; /* Cor de texto */
+font-size: 16px; /* Tamanho da fonte */
+text-align: justify; /* Texto justificado */
+margin: 20px; /* Margens para evitar que o texto fique nas bordas */
+}
+.avatar {
+position: relative;
+align-items: center;
+cursor: pointer;
+text-align: left;
+}
+
+.avatar img {
+width: 80px; /* Redimensione o tamanho desejado */
+height: 80px; /* Redimensione o tamanho desejado */
+border-radius: 50%;
+}
+
+.avatar-overlay {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.5);
+display: flex;
+justify-content: center;
+align-items: center;
+color: #fff;
+opacity: 0;
+transition: opacity 0.3s;
+border-radius: 50%;
+}
+
+.avatar:hover .avatar-overlay {
+opacity: 1;
+}
+
+.avatar-overlay span {
+font-size: 16px;
+}
+
+.avatar-input {
+display: none;
+}
+
+p {
+font-size: 15px; /* Define o tamanho da fonte para 16 pixels */
+line-height: 1; /* Define a altura da linha (espaçamento entre linhas) */
+
+}
+
+
+.resultados-table {
+border-collapse: separate;
+border-spacing: 80px;  /* Espaçamento entre células */
+width: 100%;
+margin: 30 auto;  /* Centralizar a tabela na largura da página */
+}
+
+.resultados-table th, .resultados-table td {
+padding: 30px;  /* Espaçamento interno das células */
+text-align: center;  /* Alinhamento centralizado */
+}
+
+.content-section {
+margin-left: 30px; /* Você pode ajustar o valor (em pixels) conforme necessário */
+}
+table {
+width: 100%;
+border-collapse: collapse; /* Mesclar as bordas da tabela */
+}
+th, td {
+text-align: center;
+padding: 8px; /* Espaçamento interno das células */
+}
+</style>
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="layout has-sidebar fixed-sidebar fixed-header">
+        <aside id="sidebar" class="sidebar break-point-sm has-bg-image">
+        <div class="sidebar-layout">
+            <div class="sidebar-header">
+
+                
+                <div class="pro-sidebar-logo">
+                    <label for="avatar-upload" class="avatar" style="margin-top: 20px;">
+                        {% if user.avatar %}
+                            <img src="{{ user.avatar }}" alt="Avatar" id="avatar-preview">
+                        {% else %}
+                            <img src="{{ url_for('static', filename='image/user.png') }}" alt="Avatar" id="avatar-preview">
+                        {% endif %}
+                        <div class="avatar-overlay">
+                            <span>Alterar Foto</span>
+                        </div>
+                    </label>
+                    <input type="file" id="avatar-upload" name="avatar" class="avatar-input">
+                    <p style="margin-top: 30px; padding-left: 20px;  text-align: right;">Bem-vindo, {{ user.username }}!</p>
+
+
+            </div>
+            </div>
+            <div class="sidebar-content">
+            <nav class="menu open-current-submenu">
+                
+                <ul>
+                <li class="menu-header"><span> Conta </span></li>
+                <li class="menu-item sub-menu">
+                    <a href="#" id="perfil-link" onclick="showPerfilTab()">                              <span class="menu-icon">
+                            <i class="ri-bar-chart-2-fill"></i>
+                        </span>
+                        <span class="menu-title">Informações de Perfil</span>
+                    </a>
+                    <div class="sub-menu-list">
+                    </div>
+                </li>
+            
+                <li class="menu-header"><span> Teste </span></li>
+
+                <li class="menu-item sub-menu">
+                    <a href="{{ url_for('resultados_testes') }}" onclick="toggleResultsInfo()">
+                        <span class="menu-icon">
+                            <i class="ri-vip-diamond-fill"></i>
+                        </span>
+                        <span class="menu-title">Resultados de Testes</span>
+                    </a>
+                </li>
+                
+                </li>
+                    <div class="sub-menu-list">
+
+                </li>
+                <li class="menu-item sub-menu">
+                    <a href="#" id="sintomas-comorbidades-link">
+                        <span class="menu-icon">
+                            <i class="ri-bar-chart-2-fill"></i>
+                        </span>
+                        <span class="menu-title">Sintomas/Comorbidade</span>
+                    </a>
+                    
+                    <div class="sub-menu-list">
+                    </div>
+                </li>
+                <li class="menu-item sub-menu" id="covid-info-tab">
+                    <a href="javascript:void(0);" onclick="toggleCovidInfo()">
+                        <span class="menu-icon">
+                            <i class="ri-shopping-cart-fill"></i>
+                        </span>
+                        <span class="menu-title">Informações COVID-19</span>
+                    </a>
+                </li>
+                <li class="menu-item sub-menu" id="covid-faq-tab">
+                    <a href="javascript:void(0);" onclick="toggleCovidFAQ()">
+                        <span class="menu-icon">
+                            <i class="ri-global-fill"></i>
+                        </span>
+                        <span class="menu-title">Perguntas Frequentes</span>
+                    </a>
+                </li>
+                
+                </li> 
+                <!-- perfil.html -->
+                <li class="menu-header" style="padding-top: 20px"><span> Configurações de Segurança </span></li>
+               
+                <li class="menu-item" id="redefinir-senha-link">
+                    <a href="javascript:void(0);" onclick="mostrarRedefinirSenha()">
+                        <span class="menu-icon">
+                            <i class="ri-book-2-fill"></i>
+                        </span>
+                        <span class="menu-title">Redefinir Senha</span>
+                    </a>
+                </li>
+                
+                <li class="menu-item">
+                    <a href="#" id="recover-account-link">
+                        <span class="menu-icon">
+                            <i class="ri-calendar-fill"></i>
+                        </span>
+                        <span class="menu-title">Recuperação de Conta</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#">
+                    <span class="menu-icon">
+                        <i class="ri-service-fill"></i>
+                    </span>
+                    <span class="menu-title">Autenticação de Dois Fatores</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ url_for('logout') }}">
+                        <span class="menu-icon">
+                            <i class="ri-service-fill"></i>
+                        </span>
+                        <span class="menu-title">Sair</span>
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </nav>
+    </div>
+</div>
+</aside>
+<div class="layout has-sidebar fixed-sidebar fixed-header">
+<aside id="sidebar" class="sidebar break-point-sm has-bg-image">
+    <!-- Conteúdo da barra lateral -->
+</aside>
+<div class="container-wrapper"style="font-family: 'Roboto', sans-serif;">
+    <div class="container">
+
+
+
+
+        
+
+        <div id="profile-information" style="display: none; margin: 20px; 
+        text-align:justify; color: #363636; 
+        font-size: 14px;font-family: 'Roboto', sans-serif;">
+            <!-- Conteúdo da primeira div (container) -->
+            <h2 style="text-align: center; ">Adicionar e editar as suas informações de perfil</h2>
+            <hr>
+            <br>
+            <h3 style="font-size: 20px;"> <strong>Informações básicas</strong></h3>
+            <ul>
+                <li>
+                    <strong>Nome de Usuário:</strong>
+                    <span>{{ user.username }}</span>
+                </li>
+                <li>
+                    <strong>Data de Nascimento:</strong>
+                    <span>{{ user.birth_date }}</span>
+                </li>
+                <li>
+                    <strong>Gênero:</strong>
+                    <span>{{ user.gender }}</span>
+                </li>
+                <li>
+                    <strong>Raça:</strong>
+                    <span>{{ user.race }}</span>
+                </li>
+                <hr> <!-- Linha fina após a lista -->
+
+                <h3 style="font-size: 20px;"><strong>Informações de contato</strong></h3>
+                <ul>
+                    <li>
+                        <strong>Email:</strong>
+                        <span>{{ user.email }}</span>
+                    </li>
+                    <li>
+                        <strong>Telefone:</strong>
+                        <span>{{ user.fone }}</span>
+                    </li>
+                </ul>
+                <hr> <!-- Linha fina após a lista -->
+
+                <h3 style="font-size: 20px;"> <strong>Endereços</strong></h3>
+                
+                <ul>
+                    <li>
+                        <strong>Cidade:</strong>
+                        <span>{{ user.city }}</span>
+                    </li>
+                    <li>
+                        <strong>Estado:</strong>
+                        <span>{{ user.state }}</span>
+                    </li>
+                </ul>
+            </div>
+            
+                        <!-- Seção de resultados de testes -->
+                    <!-- Seção de resultados de testes -->
+        <div id="resultados-testes" class="content-section">
+            <h2 style="text-align: center;">Informações sobre Testes</h2>
+            <hr>
+            <table id="results-table">
+                <tr>
+                    <th>Nª</th>
+                    <th>Nome</th>
+                    <th>Data</th>
+                    <th>Probabilidade</th>
+                </tr>
+                {% for resultado in resultados_testes %}
+                <tr class="result-row">
+                    <td>{{ loop.index }}</td>
+                    <td>{{ resultado.nome }}</td>
+                    <td>{{ resultado.data_do_teste }}</td>
+                    <td>{{ "%.1f"|format(resultado.probabilidade) }}%</td>
+                    <td><a href="#" class="info-link" data-teste="{{ resultado.id }}">Informações</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% if resultados_testes|length > 15 %}
+            <button id="ver-mais">Ver Mais</button>
+            {% endif %}
+            {% if not resultados_testes %}
+            <p>Nenhum resultado de teste disponível.</p>
+            {% endif %}
+
+        </div>
+
+
+
+
+<!-- Recuperação de Conta-->
+
+        <div class="content-section" id="recovery-page" style="display: none; margin-left: 250px;">
+            <!-- Página de recuperação de conta -->
+            <h1>Recuperação de Conta</h1>
+            <p>Insira seu e-mail para recuperar o acesso à sua conta.</p>
+            <form action="/recover_account" method="POST">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" required>
+                <button type="submit">Enviar</button>
+            </form>
+            <div class="message">
+                <!-- Espaço para exibir mensagens de feedback -->
+                {% if message %}
+                    <p>{{ message }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        
+        
+        
+
+
+<!-- SINTOMA E COMORBIDADE-->
+<div id="sintomas-comorbidades-content" style="display: none;margin: 20px; 
+text-align:justify; color: #363636; 
+font-size: 12px;font-family: 'Roboto', sans-serif;">
+    <div class="sintomas-content" style="margin-left: 35px;">
+        <h2>Sintomas</h2>
+        <br>
+        <br>
+        <p><strong>Névoa mental:</strong> Sensação de confusão mental, dificuldade de concentração ou clareza de pensamento.</p>
+        <p><strong>Perda de Olfato e Paladar:</strong> A perda repentina do olfato e paladar pode indicar a infecção pelo vírus.</p>
+        <p><strong>Fadiga:</strong> A fadiga excessiva e persistente pode ser um sintoma associado à doença.</p>
+        <p><strong>Dores de cabeça:</strong>  Sensações dolorosas na região da cabeça, variando de leves a intensas.</p>
+        <p><strong>Problemas de sono: </strong>Dificuldades em adormecer, manter o sono ou ter um sono reparador.</p>
+        <p><strong>Sintomas neuromusculares: </strong>Afeta os nervos e músculos, causando fraqueza, tremores ou espasmos.</p>
+        <p><strong>Distúrbios emocionais/psicológicos:</strong>Alterações no humor, ansiedade, depressão ou outros estados mentais que afetam a saúde emocional.</p>
+
+    </div>
+    <br>
+    <hr>
+    <div class="comorbidades-content"style="margin-left: 35px;">
+        <h2>Comorbidades</h2>
+        <br>
+        <p><strong>Nosocomial:</strong> Pacientes que contraíram a doença em ambiente hospitalar podem estar em maior risco.</p>
+        <p><strong>Dispneia:</strong> A dificuldade em respirar (dispneia) é um sintoma grave que requer atenção imediata.</p>
+        <p><strong>Cardiopatia:</strong> Doenças cardíacas podem aumentar o risco de complicações.</p>
+        <p><strong>Asma:</strong> Pacientes asmáticos devem manter sua condição sob controle.</p>
+        <p><strong>Diabetes:</strong> A diabetes descontrolada pode afetar negativamente a recuperação.</p>
+        <p><strong>Doença Neurológica:</strong> Doenças neurológicas pré-existentes podem complicar o tratamento.</p>
+        <br>
+        <p >Lembrando que, se você ou alguém que você conhece apresentar esses sintomas ou tiver alguma das comorbidades mencionadas, é importante procurar atendimento médico e seguir as orientações das autoridades de saúde. A detecção precoce e o tratamento adequado são essenciais para enfrentar a doença com segurança.</p>
+    </div>
+</div>
+
+
+
+
+<div id="covid-info" style="display: none;margin: 20px; 
+            text-align:justify; color: #363636; 
+            font-size: 12px;font-family: 'Roboto', sans-serif;">
+            <h2>COVID-19 de Longa Duração</h2>
+    <hr>
+    <br>
+    <p>A COVID-19 de Longa Duração, também conhecida como "Síndrome Pós-COVID" ou "Long COVID," é uma condição em que os sintomas da COVID-19 persistem por semanas ou meses após a recuperação da infecção aguda. Essa síndrome afeta uma parcela significativa de pessoas que tiveram COVID-19 e pode causar uma série de sintomas e desafios contínuos.</p>
+    <p>Essa condição pode ter um impacto significativo na qualidade de vida, dificultando as atividades diárias e o retorno à saúde plena. A pesquisa sobre a COVID-19 de Longa Duração ainda está em andamento, e os cientistas buscam entender melhor essa complexa síndrome para fornecer tratamentos mais eficazes e apoio aos pacientes afetados.</p>
+    <p><strong>Sintomas Pós-COVID</strong></p>
+    <p>Os sintomas da COVID-19 de longa duração podem variar amplamente, e muitas pessoas experimentam uma combinação de problemas de saúde que incluem fadiga extrema, falta de ar, dores musculares e articulares, dor de cabeça, dificuldade de concentração (conhecida como "mente nublada" ou "cérebro COVID"), insônia, palpitações cardíacas, perda de olfato e paladar contínua, entre outros.</p>
+
+    <p><strong>Duração dos Sintomas</strong></p>
+    <p>Os sintomas da COVID-19 de longa duração podem persistir por semanas, meses ou, em alguns casos, mais de um ano após a infecção inicial. A duração e a gravidade dos sintomas variam de pessoa para pessoa.</p>
+
+    <p><strong>Impacto na Qualidade de Vida</strong></p>
+    <p>A síndrome pós-COVID pode ter um impacto significativo na qualidade de vida, tornando as atividades diárias difíceis e afetando a capacidade de trabalho e a saúde mental. A compreensão dessa condição é fundamental para fornecer apoio adequado às pessoas afetadas.</p>
+
+    <p><strong>Busca de Ajuda Médica</strong></p>
+    <p>Se você está enfrentando sintomas persistentes após uma infecção por COVID-19, é importante procurar orientação médica. Os profissionais de saúde podem avaliar seus sintomas, realizar exames e fornecer orientações sobre o tratamento e a gestão da COVID-19 de longa duração.</p>
+        <br> 
+    
+    <p>A COVID-19 Longa é dinâmica, com informações em constante atualização. Consulte fontes confiáveis, como os CDC, OMS e instituições médicas, para atualizações. Para orientação ou assistência com sintomas persistentes pós-COVID-19, entre em contato com órgãos de saúde ou hospitais locais.</p>
+    <br>
+    <p>Para obter informações atualizadas sobre a COVID-19, consulte o <a href="https://www.saude.gov.br/coronavirus" target="_blank" rel="noopener noreferrer">site do Ministério da Saúde</a>.</p>
+</div>
+
+
+
+            <!--PERGUNTAS MAIS FREQUENTES-->
+            <!--PERGUNTAS MAIS FREQUENTES-->
+        <div id="covid-faq" style="display: none; margin: 20px; 
+        text-align:justify; color: #363636; 
+        font-size: 12px;font-family: 'Roboto', sans-serif;">
+                <!-- Conteúdo das Perguntas Frequentes -->
+                <h2>Perguntas Frequentes sobre a COVID-19 Longa</h2>
+                <hr>
+                <br>
+                    <p><strong>Pergunta 1: O que é a COVID-19 Longa?</strong></p>
+                    <p>  A COVID-19 Longa refere-se a uma condição na qual os pacientes continuam a experimentar sintomas da COVID-19 muito depois de terem se recuperado da fase aguda da doença. Esses sintomas podem incluir fadiga, falta de ar, dores no corpo e problemas cognitivos.</p>
+                    <p><strong>Fonte CDC: </strong> Post-COVID Conditions</p>
+                    <hr>
+                    <br>
+                    <p><strong>Pergunta 2: Quais são os sintomas comuns da COVID-19 Longa?</strong></p>
+                    <p>  Os sintomas comuns da COVID-19 Longa podem incluir fadiga persistente, dificuldade respiratória, dor no peito, dor de cabeça, confusão mental, perda de olfato e paladar, dores musculares e articulares, entre outros.</p>
+                    <p><strong>Fonte Mayo Clinic: </strong>Post-Acute COVID-19 Syndrome</p>
+                    <hr>
+                    <br>
+                    <p><strong>Pergunta 3: Por que algumas pessoas desenvolvem a COVID-19 Longa?</strong></p>
+                    <p>   A causa exata da COVID-19 Longa ainda não é completamente compreendida. Pode estar relacionada a uma resposta imunológica persistente, inflamação crônica ou danos aos órgãos. A pesquisa está em andamento para entender melhor essa condição.</p>
+                    <p><strong>Fonte Harvard Health:  </strong>Post-COVID Conditions</p>
+                    <hr>
+                    <br>
+                    <p><strong>Pergunta 4: Quanto tempo os sintomas da COVID-19 Longa podem durar?</strong></p>
+                    <p>  Os sintomas da COVID-19 Longa podem persistir por várias semanas ou meses. Algumas pessoas se recuperam em algumas semanas, enquanto outras experimentam sintomas por um período mais longo.</p>
+                    <p><strong>Fonte NIH:  </strong>COVID-19 and Long-Term Effects</p>
+                    <hr>
+                    <br>
+                
+                <p style="text-align: center;">Lembre-se de que a situação da COVID-19 Longa está em constante evolução, e as informações podem ser atualizadas à medida que mais pesquisas são realizadas. É sempre aconselhável consultar fontes confiáveis, como os Centros de Controle e Prevenção de Doenças (CDC), a Organização Mundial da Saúde (OMS) e instituições médicas respeitáveis, para obter informações atualizadas sobre essa condição.</p>
+            </div>
+
+
+           <!--REDEFINIR SENHA-->
+            <div id="trocar-senha-div" class="content-section" style="display: none;">
+                {% if user %}
+                    <h2>Troca de Senha</h2>
+                    <p>Para trocar sua senha, siga estas etapas:</p>
+                    <ol>
+                        <li>Crie uma nova senha forte e única.</li>
+                        <li>Confirme a nova senha.</li>
+                        <li>Clique em "Trocar Senha" para concluir o processo.</li>
+                    </ol>
+                    <p>Se você esqueceu sua senha ou acredita que sua conta foi comprometida, siga estas etapas:</p>
+                    <ol>
+                        <li>Clique em "Redefinir Senha".</li>
+                        <li>Siga o processo de recuperação para definir uma nova senha.</li>
+                    </ol>
+                    <p>Lembre-se de que, ao alterar ou redefinir sua senha, você sairá de todas as sessões ativas, exceto em casos específicos. Certifique-se de criar senhas fortes e mantenha suas informações de segurança atualizadas. Se precisar de mais ajuda, procure suporte adequado.</p>
+
+                    <form id="trocar-senha-form" method="POST" action="/trocar-senha">
+                        <hr style="border: 1px solid #ccc; margin: 10px 0;">
+                        <input type="hidden" name="user_id" id="user-id" value="{{ user.id }}">
+                        <div style="margin-bottom: 10px;">
+                            <label for="senha_antiga" style="font-weight: bold;">Senha Antiga:</label>
+                            <input type="password" name="senha_antiga" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 3px;">
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <label for="nova_senha" style="font-weight: bold;">Nova Senha:</label>
+                            <input type="password" name="nova_senha" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 3px;">
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <label for="confirmar_senha" style="font-weight: bold;">Confirmar Senha:</label>
+                            <input type="password" name="confirmar_senha" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 3px;">
+                        </div>
+                        <input type="hidden" name="redirect_url" value="/perfil">
+                        <button type="submit" class="btn btn-dark btn-sm mr-2" data-token="{{ user.reset_token }}">Trocar a senha</button>
+                    </form>
+                                    <!-- Exibir a mensagem aqui -->
+                                <div class="mensagem">
+                                    {% if message %}
+                                        <p>{{ message }}</p>
+                                    {% endif %}
+                                </div>
+                        {% endif %}        
+            </div>
+        </div>
+
+
+        <!-- Resto do seu conteúdo -->
+    </div>
+
+    </div>
+
+</div>
+
+    
+</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+
+
+// IDs das seções de conteúdo correspondentes aos itens do menu
+const sections = [
+'profile-information',
+'resultados-testes',
+'sintomas-comorbidades-content',
+'covid-info',
+'covid-faq',
+'trocar-senha-div', // Adicione o ID da nova seção aqui
+'recovery-page'
+];
+
+// Função para ocultar todas as seções de conteúdo
+function hideAllSections() {
+    sections.forEach(sectionId => {
+        const section = document.getElementById(sectionId);
+        section.style.display = 'none';
+    });
+}
+
+// Função para exibir uma seção de conteúdo específica
+function showSection(sectionId) {
+    hideAllSections();
+    const section = document.getElementById(sectionId);
+    section.style.display = 'block';
+}
+
+// Adicionar event listeners aos itens do menu
+const menuItems = document.querySelectorAll('.menu-item');
+menuItems.forEach((item, index) => {
+    item.addEventListener('click', () => {
+        // Quando um item do menu é clicado, exibe a seção correspondente
+        showSection(sections[index]);
+    });
+});
+
+// Exiba a primeira seção de conteúdo inicialmente
+//showSection(sections[0]);
+
+
+// Adicione este código JavaScript após o código existente
+document.addEventListener('DOMContentLoaded', function() {
+const resultadosTestesLink = document.querySelector('#perfil-link');
+const resultadosTestesSection = document.querySelector('#resultados-testes');
+
+resultadosTestesLink.addEventListener('click', function(event) {
+event.preventDefault();
+resultadosTestesSection.style.display = 'block';
+});
+
+// Adicione também a manipulação de clique para o link "Volta" dentro da seção do paciente
+const backToResultsLink = document.querySelector('#back-to-results');
+
+backToResultsLink.addEventListener('click', function(event) {
+event.preventDefault();
+resultadosTestesSection.style.display = 'block';
+patientInfo.style.display = 'none';
+});
+});
+// Adicione este código JavaScript após o código JavaScript existente
+document.addEventListener('DOMContentLoaded', function() {
+const resultadosTestesLink = document.querySelector('#perfil-link');
+const resultadosTestesSection = document.querySelector('#resultados-testes');
+
+resultadosTestesLink.addEventListener('click', function(event) {
+event.preventDefault();
+
+// Certifique-se de que a seção de informações do paciente esteja oculta
+const patientInfoSection = document.querySelector('#patient-info');
+if (patientInfoSection) {
+    patientInfoSection.style.display = 'none';
+}
+
+// Agora, mostre a seção "Resultados de Testes"
+resultadosTestesSection.style.display = 'block';
+});
+});
+
+//REDEFINIR SENHA
+function mostrarDiv(id) {
+const div = document.getElementById(id);
+if (div.style.display === "none" || div.style.display === "") {
+div.style.display = "block";
+} else {
+div.style.display = "none";
+}
+}
+function mostrarRedefinirSenha() {
+var trocarSenhaDiv = document.getElementById('trocar-senha-div');
+if (trocarSenhaDiv.style.display === 'none') {
+    trocarSenhaDiv.style.display = 'block';
+} else {
+    trocarSenhaDiv.style.display = 'none';
+}
+}
+
+
+// Função para mostrar a mensagem
+function mostrarMensagem(mensagem) {
+var mensagemDiv = document.querySelector('.mensagem');
+mensagemDiv.innerHTML = '<p>' + mensagem + '</p>';
+mensagemDiv.style.display = 'block';
+}
+
+// Função para ocultar a mensagem
+function ocultarMensagem() {
+var mensagemDiv = document.querySelector('.mensagem');
+mensagemDiv.style.display = 'none';
+}
+
+// Adicione este código para mostrar a mensagem após o envio do formulário
+document.addEventListener('DOMContentLoaded', function () {
+document.getElementById('trocar-senha-form').addEventListener('submit', function (e) {
+    e.preventDefault();  // Impede o envio do formulário padrão
+
+    // Simule o envio do formulário e receba a resposta (sucesso ou erro) do servidor
+    var isSuccess = true;  // Defina isso com base na resposta real do servidor
+
+    if (isSuccess) {
+        mostrarMensagem('Senha alterada com sucesso.');
+    } else {
+        mostrarMensagem('Erro ao alterar a senha. Tente novamente.');
+    }
+});
+});
+
+
+let startIndex = 15;
+
+    function showMoreResults() {
+        const rows = document.querySelectorAll('.result-row');
+        for (let i = 0; i < rows.length; i++) {
+            rows[i].style.display = 'none';
+        }
+        for (let i = startIndex; i < startIndex + 15; i++) {
+            if (i < rows.length) {
+                rows[i].style.display = 'table-row';
+            } else {
+                document.getElementById('ver-mais').style.display = 'none';
+                break;
+            }
+        }
+        startIndex += 15;
+    }
+
+    document.getElementById('ver-mais').addEventListener('click', showMoreResults);
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const rows = document.querySelectorAll('.result-row');
+        for (let i = 15; i < rows.length; i++) {
+            rows[i].style.display = 'none';
+        }
+    });
+
+
+
+
+    $(document).ready(function() {
+        $('.info-link').on('click', function(e) {
+            e.preventDefault();
+            var testeID = $(this).data('teste');
+    
+            $.ajax({
+                url: '/detalhes_teste/' + testeID,
+                type: 'GET',
+                success: function(response) {
+                    exibirInformacoesPaciente(response); // Exibe os detalhes do paciente
+                },
+                error: function(error) {
+                    console.log('Erro ao buscar detalhes do teste:', error);
+                }
+            });
+        });
+    
+        $('#back-to-results').on('click', function(e) {
+            e.preventDefault();
+            $('#patient-details').hide(); // Esconde os detalhes do paciente ao voltar aos resultados
+        });
+    });
+    
+
+
+
+
+
+// Lógica JavaScript para exibir a página de recuperação de conta
+const recoverAccountLink = document.getElementById('recover-account-link');
+const recoveryPage = document.getElementById('recovery-page');
+
+recoverAccountLink.addEventListener('click', function(event) {
+    event.preventDefault();
+    recoveryPage.style.display = 'block';
+});
+
+
+// Lógica JavaScript para exibir a página de recuperação de conta
+document.getElementById('recover-account-link').addEventListener('click', function(event) {
+    event.preventDefault();
+    document.getElementById('recovery-page').style.display = 'block';
+});
+
+
+
+    
+
+</script>
+
+
+{% include 'footer.html' %}
+</body>
+</html>
+

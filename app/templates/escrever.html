@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Página de Login</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        
+    </head>
+
+  <style>
+    .flex-container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .image-container {
+        width: 40%;
+    }
+    .form {
+        position: relative;
+        z-index: 1;
+        background: #8348B9;
+        max-width: 360px;
+        width: 600px;
+        margin: 0 auto 100px;
+        text-align: center;
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+        border-radius: 10px;
+        width: 80%;
+        max-width: 400px;
+        margin: 0 auto;
+        display: block;
+        padding: 20px;
+    }
+    .form input {
+        font-family: "Roboto", sans-serif;
+        outline: 0;
+        width: 80%;
+        max-width: 300px;
+        border: 2px solid #363636; /* Adiciona uma borda preta */
+        margin: 0 0 15px;
+        box-sizing: border-box;
+        height: 35px;
+        font-size: 14px;
+        border: 2px solid #363636;
+        border-radius: 10px;
+        
+        padding: 15px;
+}
+.form button {
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: #1C1C1C;
+    width: 75%;
+    border: 0;
+    padding: 10px; /* Alterado para 10px */
+    border-radius: 10px; /* Adicionado para bordas arredondadas */
+    color: #FFFFFF;
+    font-size: 12px; /* Alterado para 12px */
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+    }
+
+
+    .form button:hover,.form button:active,.form button:focus {
+        background: #1C1C1C;
+    }
+    
+    
+    .form .message {
+        margin: 15px 0 0;
+        color: #b3b3b3;
+        font-size: 12px;
+    }
+    .form .message a {
+        color: #1C1C1C;
+        text-decoration: none;
+    }
+    .form .register-form {
+        display: none;
+    }
+    .container {
+        position: relative;
+        z-index: 1;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+    .container:before, .container:after {
+        content: "";
+        display: block;
+        clear: both;
+    }
+    .container .info {
+        margin: 50px auto;
+        text-align: center;
+    }
+    .container .info h1 {
+        margin: 0 0 15px;
+        padding: 0;
+        font-size: 36px;
+        font-weight: 300;
+        color: #1a1a1a;
+    }
+    .container .info span {
+        color: #4d4d4d;
+        font-size: 12px;
+    }
+    .container .info span a {
+        color: #363636;
+        text-decoration: none;
+    }
+    .container .info span .fa {
+        color: #EF3B3A;
+    }
+    .left-label {
+      text-align: left;
+      float: left;
+    }
+
+
+</style>
+<body>
+    {% include 'header.html' %}
+    <div class="flex-container">
+        <div class="image-container">
+            <img src="{{ url_for('static', filename='image/imagEscrever.png') }}" style="width: 90%; height: 90%; margin-top: 30px; margin-right: 100px; margin-left: 100px;">
+        </div>
+        <div class="write-page" style="margin-top: 100px; " >
+            <div class="form" style="margin-top: -50px; margin-right: 180px;">
+                <p style="padding: 10px; font-size: 20px;" class="inline-field">Criar nova conta</p>
+                <form action="{{ url_for('criar_conta') }}" method="POST">
+                    <input type="text" name="username" placeholder="Nome de usuário" class="input-style" required>
+                    <input type="email" name="email" placeholder="Email" class="input-style" required>
+                    <input type="password" name="password" placeholder="Senha" class="input-style" required>
+                    <input type="password" name="confirm_password" placeholder="Confirme a senha" class="input-style" required>
+                    <input type="date" name="birth_date" placeholder="Data de Nascimento" class="input-style" required>
+                    <div class="form-row" style="display: flex; align-items: center;padding: 10px;">
+                        <select name="gender" required style="padding: 5px; font-size: 11px; flex: 0.4; margin-left: 90px;">
+                            <option value="" disabled selected>Sexo</option>
+                            <option value="masculino">Masculino</option>
+                            <option value="feminino">Feminino</option>
+                            <option value="outro">Outro</option>
+                        </select>
+                        
+                        
+                        <select name="race" required style="padding: 5px; font-size: 11px; flex: 0.4; margin-right: 50px;">
+                            <option value="" disabled selected>Raça</option>
+                            <option value="branca">Branca</option>
+                            <option value="negra">Negra</option>
+                            <option value="parda">Parda</option>
+                            <option value="amarela">Amarela</option>
+                            <option value="indigena">Indígena</option>
+                        </select>
+                        
+                    </div>
+                    <input type="text" name="city" placeholder="Cidade" required>
+                    <input type="text" name="state" placeholder="Estado" required>
+                    <button type="submit">Criar conta</button>
+                    <p class="message">Já tem uma conta? <a href="{{ url_for('login') }}">Faça login</a></p>
+                </form>
+            </div>
+        </div>
+       
+    </div>
+
+    {% include 'footer.html' %}
+</body>
+</html>

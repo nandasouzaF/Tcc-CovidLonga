@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Página de Login</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<style>
+    .text h1 {
+        text-align: center;
+    }
+    .test_form,
+    .text {
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    .test_form {
+        width: 20%; /* Defina a largura desejada para a div test-page */
+        margin-left: 20px; /* Ajuste o valor da margem esquerda conforme desejado */
+    }
+    
+    .text h1,
+    .text h2,
+
+    .text div {
+        margin-bottom: 10px;
+        text-align: center; /* Ajuste o valor da margem inferior conforme desejado */
+    }
+
+
+
+.text {
+    width: 30%; /* Defina a largura desejada para a div text */
+    margin-left: 200px;
+    margin-top: 60px;
+}
+
+
+    .button-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .flex-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.small-heading {
+    font-size: 15px;
+}
+
+.small-text {
+font-size: 14px; 
+}
+.form button,
+        .button-container button {
+            font-family: "Roboto", sans-serif;
+            text-transform: uppercase;
+            outline: 0;
+            background: #1C1C1C;
+            width: 50%;
+            border: 0;
+            padding: 10px;
+            border-radius: 10px;
+            color: #FFFFFF;
+            font-size: 12px;
+            -webkit-transition: all 0.3 ease;
+            transition: all 0.3 ease;
+            cursor: pointer;
+            margin: 10px auto 0;
+            display: block;
+            margin-top: 80px;
+        }
+        .form button:hover,
+        .form button:active,
+        .form button:focus,
+        .button-container button:hover,
+        .button-container button:active,
+        .button-container button:focus {
+            background: #1C1C1C;
+        }
+
+
+    .form-title {
+    padding-bottom: 50px;
+    padding-top: 70px;
+   
+
+}
+
+/* Estilo para o aviso */
+.warning {
+  background-color: #fef7e5; /* Cor de fundo do aviso */
+  border-left: 6px solid #f7d351; /* Cor da borda do aviso */
+  padding: 10px; /* Espaçamento interno */
+  margin-bottom: 20px; /* Margem inferior para separar do conteúdo */
+}
+
+/* Estilo para o texto do aviso */
+.warning p {
+  margin: 0; /* Remover margem padrão */
+}
+
+</style>
+</head>
+<body>
+    {% include 'header.html' %}
+        <div class="flex-container">
+
+        <div class="test_form">
+            
+            <div class="image-container" >
+                <img src="{{ url_for('static', filename='image/imagTest.png') }}" 
+                style="width:190%; height: 99%; margin-left: 150px;margin-top: 50px;">
+            </div>
+        </div>
+        <div class="form-container" style="text-align: left; margin-top: 80px; margin-left: 300px;">
+            <h2 class="small-heading" style="font-weight: bold; margin-bottom: 20px; font-size: 24px;margin-right:120px">Resultado da Probabilidade</h2>
+            <div>
+              <p style=" margin-top: 50px;margin-left:300px;">A probabilidade calculada é: <strong>{{ probability }}</strong> </p>
+            </div>
+            <div>
+              <p style="margin-top: 50px; margin-left:-150px; "><p><strong>{{ mensagem }}</strong></p></p>
+            </div>
+            <div class="warning" style="margin-top: 50px; margin-left: 20px; margin-right: 50px;">
+                <p><strong>Considerações Importantes:</strong> O teste de probabilidade fornecido pelo site é apenas uma estimativa baseada em dados analíticos. Ele não substitui a avaliação e o diagnóstico médico. Os usuários são fortemente aconselhados a procurar um profissional de saúde para confirmar o diagnóstico e receber orientações adequadas.</p>
+              </div>
+          
+          
+          
+            <div class="button-container">
+                <form method="GET" action="/voltar">
+                    <button type="submit" style="min-width: 100px;">Voltar</button>
+                </form>
+            </div>
+        </div>
+        
+                
+</body>
+</html>

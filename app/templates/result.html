@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resultado do Teste</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Resultado</h1>
+    <p>Nome: {{ nome }}</p>
+    <p>Idade: {{ idade }}</p>
+    <p>Sexo: {{ sexo }}</p>
+    <!-- Exibir comorbidades -->
+<h2>Comorbidades:</h2>
+<p>Dispneia: {{ comorbidades['dispneia'] }}</p>
+<p>Infecção nosocomial: {{ comorbidades['nosocomial'] }}</p>
+<p>Pneumopatia crônica: {{ comorbidades['pneumopati'] }}</p>
+<p>Cardiopatia crônica: {{ comorbidades['cardiopati'] }}</p>
+<p>Síndrome de Down: {{ comorbidades['sind_down'] }}</p>
+<p>Asma: {{ comorbidades['asma'] }}</p>
+<p>Diabetes: {{ comorbidades['diabetes'] }}</p>
+<p>Doença neurológica crônica: {{ comorbidades['neurologic'] }}</p>
+<p>Doença renal crônica: {{ comorbidades['renal'] }}</p>
+<p>Obesidade: {{ comorbidades['obesidade'] }}</p>
+
+<!-- Exibir sintomas -->
+<h2>Sintomas:</h2>
+<p>Diarreia: {{ sintomas['diarreia'] }}</p>
+<p>Perda de olfato: {{ sintomas['perd_olft'] }}</p>
+<p>Perda de paladar: {{ sintomas['perd_pala'] }}</p>
+<p>Fadiga: {{ sintomas['fadiga'] }}</p>
+<p>Tosse: {{ sintomas['tosse'] }}</p>
+
+    <p>Probabilidade: {{ probabilidade }}</p>
+    {% include 'footer.html' %}
+</body>
+</html>

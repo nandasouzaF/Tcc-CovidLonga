@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Página de Login</title>
+<style>
+    /* Estilos gerais */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+    }
+
+    /* Estilos específicos para o formulário */
+    .form-container {
+        max-width: 800px;
+        margin-top: 40px;
+        background: rgba(131, 72, 185, 0.5); /* Cor mais suave com 50% de transparência */
+        padding: 30px;
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+        border-radius: 10px;
+    }
+
+    .form-title {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .form-error {
+        color: red;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    .form-actions {
+        text-align: right;
+    }
+
+    .form-actions button {
+        background-color: #1C1C1C;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 14px;
+        font-weight: bold;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .text div {
+        margin-bottom: 60px;
+        text-align: center; /* Ajuste o valor da margem inferior conforme desejado */
+    }
+
+    .flex-container {
+        display: flex;
+    }
+    .form-container {
+        text-align: center;
+    }
+    
+    .form-split {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+    
+    .form-left,
+    .form-right {
+        width: calc(50% - 10px); /* Para criar um espaço entre as duas partes */
+    }
+    
+    .form-left {
+        border-right: 1px solid #ccc; /* Linha vertical entre as duas partes */
+        padding-right: 10px;
+        margin-right: 10px;
+    }
+
+    
+
+
+
+
+    /* Estilos para alinhar os elementos */
+    .checkbox-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        flex-wrap: wrap; /* Permite a quebra de linha */
+    }
+
+    .checkbox-item {
+        display: flex;
+        align-items: center;
+        margin-top: 5px;
+    }
+
+    .checkbox-item input[type="checkbox"] {
+        margin-right: 20px; /* Espaço entre o input e o label */
+        font-size: 14px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .checkbox-item label {
+        font-size: 14px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .small-text {
+        font-size: 12px;
+        display: block;
+        margin-top: 5px; /* Adiciona espaço entre o <p> e o checkbox/label */
+    }
+    .checkbox-description {
+        margin-top: 10px;
+    }
+    .checkbox-group label {
+        display: block;
+        margin-bottom: 10px; /* Ajuste conforme necessário */
+    }
+</style>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <div class="flex-container">
+        <div class="image-container">
+            <img src="{{ url_for('static', filename='image/imagTest.png') }}" style="width:50%; height: 60%;margin-left:100px; margin-top: 30px;">
+        </div>
+    <div class="form-container" style="margin-left:-180px;">
+        <h2 class="form-title" style="text-align: center">Ficha de Paciente</h2>
+        <form method="POST" action="/test_prob.html" class="form-split">
+            <div class="form-left">
+                <div class="form-group">
+                    <label for="username">Nome:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="age">Idade:</label>
+                    <input type="number" id="age" name="age" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="gender">Sexo:</label>
+                    <select id="gender" name="gender" required>
+                        <option value="" disabled selected>Selecione</option>
+                        <option value="masculino">Masculino</option>
+                        <option value="feminino">Feminino</option>
+                        <option value="outro">Outro</option>
+                    </select>
+                </div>
+
+               
+
+                <div class="form-group">
+                    <label for="race">Raça:</label>
+                    <select id="race" name="race" required>
+                        <option value="" disabled selected>Selecione</option>
+                        <option value="1">Branca</option>
+                        <option value="2">Negra</option>
+                        <option value="4">Parda</option>
+                        <option value="3">Amarela</option>
+                        <option value="5">Indígena</option>
+                    </select>
+                </div>
+
+                
+
+                <div class="form-group">
+                    <label for="education">Escolaridade:</label>
+                    <select id="education" name="education" required>
+                        <option value="" disabled selected>Selecione</option>
+                        <option value="0">Sem escolaridade/Analfabeto</option>
+                        <option value="1">Fundamental 1º ciclo (1ª a 5ª série)</option>
+                        <option value="2">Fundamental 2º ciclo (6ª a 9ª série)</option>
+                        <option value="3">Médio (1º ao 3º ano)</option>
+                        <option value="4">Superior</option>
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="state">Estado:</label>
+                    <select id="state" name="state" required>
+                        <option value="" disabled selected>Selecione</option>
+                        <option value="AC">AC</option>
+                        <option value="AL">AL</option>
+                        <option value="AP">AP</option>
+                        <option value="AM">AM</option>
+                        <option value="BA">BA</option>
+                        <option value="CE">CE</option>
+                        <option value="DF">DF</option>
+                        <option value="ES">ES</option>
+                        <option value="GO">GO</option>
+                        <option value="MA">MA</option>
+                        <option value="MT">MT</option>
+                        <option value="MS">MS</option>
+                        <option value="MG">MG</option>
+                        <option value="PA">PA</option>
+                        <option value="PB">PB</option>
+                        <option value="PR">PR</option>
+                        <option value="PE">PE</option>
+                        <option value="PI">PI</option>
+                        <option value="RJ">RJ</option>
+                        <option value="RN">RN</option>
+                        <option value="RS">RS</option>
+                        <option value="RO">RO</option>
+                        <option value="RR">RR</option>
+                        <option value="SC">SC</option>
+                        <option value="SP">SP</option>
+                        <option value="SE">SE</option>
+                        <option value="TO">TO</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="city">Cidade:</label>
+                    <input type="text" id="city" name="city" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="zone">Zona:</label>
+                    <select id="zone" name="zone" required>
+                        <option value="" disabled selected>Selecione</option>
+                        <option value="urbana">Urbana</option>
+                        <option value="rural">Rural</option>
+                    </select>
+                </div>
+
+
+
+
+                <div class="form-group_sintomas">
+                    <p><strong>Sintomas</strong></p>
+                    <div class="checkbox-group">
+                        <label for="Nevoa_mental">
+                            <input type="checkbox" id="Nevoa_mental" name="Nevoa_mental" value="1">
+                            Névoa mental
+                        </label>
+                        <label for="Perda_olfato" >
+                            <input type="checkbox" id="Perda_olfato" name="Perda_olfato" value="1" style="margin-left: 30px;">
+                            Perda de olfato
+                        </label>
+                        <label for="Perda_paladar">
+                            <input type="checkbox" id="Perda_paladar" name="Perda_paladar" value="1">
+                            Perda de paladar
+                        </label>
+                        <label for="Fadiga">
+                            <input type="checkbox" id="Fadiga" name="Fadiga" value="1" style="margin-left: 15px;">
+                            Fadiga
+                        </label>
+                        <label for="Dores_cabeça">
+                            <input type="checkbox" id="Dores_cabeça" name="Dores_cabeça" value="1">
+                            Dores de cabeça 
+                        </label>
+                        <label for="Problemas_sono">
+                            <input type="checkbox" id="Problemas_sono" name="Problemas_sono" value="1"style="margin-left: 15px;">
+                            Problemas de sono
+                        </label>
+                        <label for="sintomas_neuromusculares">
+                            <input type="checkbox" id="sintomas_neuromusculares" name="sintomas_neuromusculares" value="1">
+                            Sintomas neuromusculares
+                        </label>
+                        <label for="Distúrbios_emocionais_psicológicos">
+                            <input type="checkbox" id="Distúrbios_emocionais_psicológicos" name="Distúrbios_emocionais_psicológicos" value="1">
+                            Distúrbios emocionais e psicológicos
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-right">
+
+
+
+
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="UTI" name="UTI" value="1">
+                        <label for="UTI">Internação UTI:</label>
+                    </div>
+                    <div class="checkbox-description" style=" margem-right: 20px;margin-top: 10px; padding:10px">
+                        <p class="small-text">O paciente foi internado em UTI?</p>
+                    </div>
+                </div> 
+
+
+
+                <div class="form-group">
+                    <p><strong>Comorbidades:</strong></p>
+                    
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="NOSOCOMIAL" name="NOSOCOMIAL" value="1">
+                            <label for="NOSOCOMIAL">NOSOCOMIAL</label>
+                        </div>
+                        <div class="checkbox-description">
+                            <p class="small-text">(Infecção adquirida durante a estadia em um ambiente de saúde, como hospitais ou clínicas.)</p>
+                        </div>
+                    </div>
+            
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="DISPNEIA" name="DISPNEIA" value="1">
+                            <label for="DISPNEIA">DISPNEIA</label>
+                        </div>
+                        <div class="checkbox-description">
+                            <p class="small-text">(A dispneia é a sensação de dificuldade ou desconforto ao respirar.)</p>
+                        </div>
+                    </div>
+            
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="CARDIOPATI" name="CARDIOPATI" value="1">
+                            <label for="CARDIOPATI">CARDIOPATI</label>
+                        </div>
+                        <div class="checkbox-description">
+                            <p class="small-text">(Cardiopatia é um termo geral que se refere a qualquer doença ou condição que afeta o coração.)</p>
+                        </div>
+                    </div>
+            
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="ASMA" name="ASMA" value="1">
+                            <label for="ASMA">ASMA</label>
+                        </div>
+                        <div class="checkbox-description">
+                            <p class="small-text">(A asma é crônica e estreita as vias aéreas, causando dificuldade respiratória, chiado e tosse.)</p>
+                        </div>
+                    </div>
+            
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="DIABETES" name="DIABETES" value="1">
+                            <label for="DIABETES">DIABETES</label>
+                        </div>
+                        <div class="checkbox-description">
+                            <p class="small-text">(Diabetes é a dificuldade do corpo em regular os níveis de açúcar no sangue.)</p>
+                        </div>
+                    </div>
+            
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="NEUROLOGIC" name="NEUROLOGIC" value="1">
+                            <label for="NEUROLOGIC">NEUROLOGIC</label>
+                        </div>
+                        <div class="checkbox-description">
+                            <p class="small-text">(Neurológico diz respeito ao sistema nervoso, abrangendo cérebro, medula e nervos.)</p>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="form-actions" style="text-align: center;">
+                    <button type="submit">Fazer Teste</button>
+                </div>
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+    <script>
+       
+
+        // Adicione um ouvinte de evento para detectar mudanças no campo "gender"
+        var genderSelect = document.getElementById("gender");
+        genderSelect.addEventListener("change", toggleGestanteOption);
+
+        // Chame a função toggleGestanteOption ao carregar a página para definir o estado inicial
+        toggleGestanteOption();
+    </script>
+
+{% include 'footer.html' %}
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Página de Login</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<style>
+    .text h1 {
+        text-align: center;
+    }
+    .test_form,
+    .text {
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    .test_form {
+        width: 20%; /* Defina a largura desejada para a div test-page */
+        margin-left: 20px; /* Ajuste o valor da margem esquerda conforme desejado */
+    }
+    
+    .text h1,
+    .text h2,
+
+    .text div {
+        margin-bottom: 60px;
+        text-align: center; /* Ajuste o valor da margem inferior conforme desejado */
+    }
+
+
+
+.text {
+    width: 30%; /* Defina a largura desejada para a div text */
+    margin-left: 200px;
+    margin-top: 60px;
+}
+.message {
+width: 50%;
+margin-left: 250px;
+margin-right: 800px; /* Aumente este valor para mover mais à direita */
+margin-top: 60px;
+ /* Para o alinhamento do texto à esquerda */
+}
+
+.paragrafo {
+font-size: 15px;
+}
+
+    .button-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .flex-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.small-heading {
+    font-size: 15px;
+}
+
+.small-text {
+font-size: 14px; 
+}
+/* Adicione uma margem vertical entre os botões */
+    .settings-button {
+        margin-bottom: 20px;
+    }
+
+    .form button,
+    .button-container button {
+        font-family: "Roboto", sans-serif;
+        text-transform: uppercase;
+        outline: 0;
+        background: #1C1C1C;
+        width: 50%;
+        border: 0;
+        padding: 10px;
+        border-radius: 10px;
+        color: #FFFFFF;
+        font-size: 12px;
+        -webkit-transition: all 0.3 ease;
+        transition: all 0.3 ease;
+        cursor: pointer;
+        margin: 10px auto 0;
+        display: block;
+        margin-top: 80px;
+    }
+
+    .form button:hover,
+    .form button:active,
+    .form button:focus,
+    .button-container button:hover,
+    .button-container button:active,
+    .button-container button:focus {
+        background: #1C1C1C;
+    }
+
+    .login-button {
+font-family: "Roboto", sans-serif;
+text-transform: uppercase;
+outline: 0;
+background: #1C1C1C;
+width: 50%;
+border: 0;
+padding: 10px;
+border-radius: 10px;
+color: #FFFFFF;
+font-size: 12px;
+-webkit-transition: all 0.3s ease;
+transition: all 0.3s ease;
+cursor: pointer;
+display: block;
+text-align: center;
+margin-top: 80px;
+}
+
+.login-button:hover {
+background: #1C1C1C;
+}
+
+</style>
+</head>
+<body>
+{% include 'header.html' %}
+<div class="flex-container">
+    <div class="test_form">
+        <div class="image-container" >
+            <img src="{{ url_for('static', filename='image/imagTest.png') }}" style="width:130%; height: 99%; margin-left: 100px; margin-top: 70px;">
+        </div>
+    </div>
+    {% if current_user.is_anonymous %}
+    <div class="message" style=" margin-right: 190px; margin-top:20px">
+        <h2 class="small-heading; ; font-weight: bold;"style="text-align: center;">Bem-vindo à página de teste!</h2>
+        <br>
+        
+        <p class="paragrafo">O nosso projeto foi desenvolvido para ajudar a estimar a probabilidade de um paciente ter Covid-19 de longa duração após o período de infecção inicial. A Covid-19 de longa duração, também conhecida como "Covid longa", refere-se a sintomas que persistem por um período prolongado após a infecção inicial por Covid-19. Esta ferramenta é projetada para fornecer uma avaliação preliminar, mas é importante lembrar que não substitui uma avaliação médica profissional. Os resultados desta ferramenta são apenas uma estimativa e não podem garantir um diagnóstico preciso.</p>
+        <p style="text-align: left; font-weight: bold;">Como Funciona:  </p>
+        <p class="paragrafo">
+            1-Preenchimento do Formulário: O paciente preenche um formulário com informações sobre os sintomas que continuaram após três semanas de infecção por 
+            Covid-19. Isso inclui detalhes como a natureza dos sintomas, sua intensidade e duração.<br>
+            <br>
+            2-Análise de Dados: Utilizamos técnicas de Machine Learning para analisar os dados fornecidos. Nosso algoritmo leva em consideração uma variedade de 
+            fatores para calcular a probabilidade de Covid Longa.<br>
+            <br>
+            3-Probabilidade Estimada: O resultado é uma probabilidade, expressa como um valor de 0 a 100, que indica a chance de o paciente estar lidando com Covid Longa.
+        </p>
+        <p class="paragrafo"style="text-align: left; font-weight: bold;">Aviso Importante:  </p>
+        <p>É crucial lembrar que os resultados fornecidos pelo nosso serviço são apenas uma estimativa e não substituem a avaliação de um profissional de saúde. Se você suspeitar de Covid Longa ou tiver sintomas persistentes, é fundamental buscar orientação médica para um diagnóstico preciso.</p>
+        <p style="text-align: left; font-weight: bold;">Privacidade e Segurança: </p>
+        <p class="paragrafo">Respeitamos a privacidade dos pacientes e garantimos que as informações fornecidas sejam tratadas com sigilo e segurança.
+
+            Agradecemos por escolher nosso serviço. Se você está pronto para fazer o teste, clique no botão "Fazer Teste". Se ainda não tem uma conta, você pode se cadastrar para acessar este recurso.</p>
+            <div class="button-container">
+                <a href="{{ url_for('login') }}" class="login-button">Fazer Login</a>
+            </div>
+    </div>
+
+
+
+
+
+
+
+   
+    {% else %}
+    <div class="text" style=" margin-right: 300px;">
+        <h2 class="small-heading; ; font-weight: bold;">Covid - 19 Longa</h2>
+        <p style="text-align: center; font-weight: bold;">App que utiliza Machine Learning para prever possível Covid longa em pacientes.</p>
+        <h3 style="text-align: center; font-size: 20px; margin-top: 40px; margin-bottom:30px">Instruções</h3>
+        <p class="small-text">
+            1- Preencher a ficha do paciente ao lado esquerdo desta tela.<br>
+            <br>
+            2- Clicar no botão "Confirmar" para obter os resultados da avaliação.<br>
+            <br>
+            3- Clicar no botão "Nova Ficha" para finalizar e iniciar uma nova ficha do paciente.
+        </p>
+        <div class="button-container" style="margin-top: -40px;">
+            <button type="button" onclick="redirectToTestForm()">Fazer Teste</button>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+    <script>
+        function redirectToTestForm() {
+            window.location.href = "{{ url_for('test_page') }}";
+        }
+    </script>
+</div>
+</div>
+{% include 'footer.html' %}
+</body>
+</html>
