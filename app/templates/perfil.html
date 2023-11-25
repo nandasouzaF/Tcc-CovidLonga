@@ -311,24 +311,37 @@ padding: 8px; /* Espaçamento interno das células */
 
 
 
-<!-- Recuperação de Conta-->
+        <!-- Recuperação de Conta-->
 
-        <div class="content-section" id="recovery-page" style="display: none; margin-left: 250px;">
+        <div class="content-section" id="recovery-page" style="display: none; ">
             <!-- Página de recuperação de conta -->
-            <h1>Recuperação de Conta</h1>
-            <p>Insira seu e-mail para recuperar o acesso à sua conta.</p>
-            <form action="/recover_account" method="POST">
+            <h2 style="color: #333;  text-align: center; margin-:top 30px;">Recuperação de Conta</h2>
+            <br>
+            <br>
+
+        <p>Após enviar o formulário, verifique sua caixa de entrada de e-mail, incluindo a pasta de spam, para instruções sobre como recuperar sua conta.</p>
+        <p>Lembre-se de verificar se o endereço de e-mail inserido está correto para garantir o recebimento das instruções de recuperação.</p>
+        <p>Este processo de recuperação pode levar alguns minutos. Se não receber o e-mail, verifique sua pasta de spam ou entre em contato conosco.</p>
+        <p>Para sua segurança, evite compartilhar informações pessoais ou de conta por e-mail, mesmo que aparentemente provenham de nossa empresa.</p>
+            <p>Insira seu endereço de e-mail abaixo para recuperar o acesso à sua conta.</p>
+           
+
+            <form id="recovery-form" class="recovery-form" onsubmit="validateAndCheckEmail(); return false;">
                 <label for="email">E-mail:</label>
                 <input type="email" id="email" name="email" required>
                 <button type="submit">Enviar</button>
             </form>
+         <!-- Exibição da mensagem -->
+         <div id="message"></div>
             <div class="message">
                 <!-- Espaço para exibir mensagens de feedback -->
                 {% if message %}
                     <p>{{ message }}</p>
                 {% endif %}
-            </div>
+            
         </div>
+
+    </div>
 
         
         
@@ -697,7 +710,53 @@ document.getElementById('recover-account-link').addEventListener('click', functi
 
 
 
-    
+// Recuperação de Conta
+function submitForm() {
+    // Simula o envio do formulário (substitua esta parte pelo código de envio real)
+    // Aqui você pode adicionar lógica para enviar o e-mail de recuperação ou fazer o processamento necessário
+    // Esta é apenas uma simulação
+    const email = document.getElementById('email').value;
+    console.log(`Solicitada recuperação para o e-mail: ${email}`);
+
+    // Exibe a mensagem na mesma página
+    const messageDiv = document.getElementById('message');
+    messageDiv.innerHTML = 'E-mail de recuperação enviado! Verifique sua caixa de entrada.';
+}
+
+
+function validateAndCheckEmail() {
+    const emailInput = document.getElementById('email');
+    const email = emailInput.value.trim();
+
+    fetch('/check_email', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `email=${email}`
+    })
+    .then(response => response.text())
+    .then(data => {
+        if (data === 'exists') {
+            submitForm(); // Se o e-mail existe, envie o formulário
+        } else {
+            const messageDiv = document.getElementById('message');
+            messageDiv.innerHTML = 'E-mail não encontrado no banco de dados.';
+        }
+    })
+    .catch(error => console.error('Erro:', error));
+}
+
+function submitForm() {
+    // Simula o envio do formulário
+    const email = document.getElementById('email').value;
+    console.log(`Solicitada recuperação para o e-mail: ${email}`);
+
+    // Exibe a mensagem na mesma página
+    const messageDiv = document.getElementById('message');
+    messageDiv.innerHTML = 'E-mail de recuperação enviado! Verifique sua caixa de entrada.';
+}
+
 
 </script>
 

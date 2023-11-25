@@ -18,14 +18,14 @@ app = Flask(__name__)
 
 # Configurações
 app.config['SECRET_KEY'] = 'your_secret_key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:1234....Rr@localhost/mydb_covidLonga'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:1234....Rr@localhost/mydb_covid'
 app.config['DEBUG_TB_ENABLED'] = True
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Extensões
 db = SQLAlchemy(app)
-db.reflect()
+
 bcrypt = Bcrypt(app)
 toolbar = DebugToolbarExtension(app)
 login_manager = LoginManager(app)
@@ -48,9 +48,7 @@ except Exception as e:
 
 
 
-# Atualiza o modelo com as mudanças no banco de dados
-with app.app_context():
-    db.reflect()
+
 
 #Definição do modelo User
 class User(db.Model, UserMixin):
@@ -71,7 +69,8 @@ class User(db.Model, UserMixin):
     #pacientes = db.relationship('Paciente', backref='user_pacientes', lazy=True)
     # Relacionamento com Paciente
     #paciente_user = db.relationship('Paciente', backref='user', overlaps="pacientes,user_pacientes")
-    paciente_user = db.relationship('Paciente', backref='related_user', overlaps="pacientes,user_pacientes")
+    #paciente_user = db.relationship('Paciente', backref='related_user', overlaps="pacientes,user_pacientes")
+    related_pacientes = db.relationship('Paciente', backref='related_user', overlaps="paciente_user,related_user")
 
     
     
@@ -129,8 +128,8 @@ class Paciente(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     #user = db.relationship('User', backref='paciente_user')
     # Relacionamento com User
-    user = db.relationship('User', backref='related_pacientes', overlaps="pacientes,user_pacientes")
-    
+    #user = db.relationship('User', backref='related_pacientes', overlaps="pacientes,user_pacientes")
+    user = db.relationship('User', backref='paciente_user', overlaps="paciente_user,related_user")
     
 # Consulta à tabela Paciente após a criação
 with app.app_context():
@@ -322,7 +321,18 @@ def login_post():
     # Renderiza o template de login
     return render_template('login.html')
 
-#Definindo o Modelo do Usuário:
+
+
+#autenticação de dois fatores 
+
+
+
+
+
+
+
+
+
 
 
 
@@ -897,6 +907,12 @@ users = {
         'password_hash': generate_password_hash('password123')
     }
 }
+
+
+
+
+
+
 #----------------------------------------------
 #usuários redefinam
 @app.route('/forgot_password', methods=['GET', 'POST'])
@@ -926,9 +942,42 @@ def reset_password(token):
         return render_template('login.html')
 
     return render_template('login.html')
+# ...
 
 
 
+
+#Recuperação da conta
+@app.route('/check_email', methods=['POST'])
+def check_email():
+    email = request.form.get('email')
+    user = User.query.filter_by(email=email).first()
+
+    if user:
+        return 'exists'  # Se o e-mail existir, retorne 'exists'
+    else:
+        return 'not_exists'  # Se o e-mail não existir, retorne 'not_exists'
+
+@app.route('/recover_account', methods=['POST'])
+def recover_account():
+    email = request.form.get('email')
+
+    # Verifica se o e-mail existe no banco de dados
+    email_exists = request.form.get('email_exists')  # Recebe a resposta da verificação de e-mail
+
+    if email_exists == 'exists':
+        # Se o e-mail existir, continue com a lógica para recuperar a conta
+        print(f"Solicitada recuperação para o e-mail: {email}")
+        # Lógica para enviar e-mail de recuperação aqui
+        return 'E-mail de recuperação enviado! Verifique sua caixa de entrada.'
+    else:
+        return 'E-mail não encontrado no banco de dados. Não foi possível recuperar a conta.'
+    
+    
+    
+    
+    
+    
 
 # PAGINA DE INCRIÇÃO 
 
